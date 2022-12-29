@@ -1,0 +1,327 @@
+{
+    "tables": [
+        {
+            "title": "Principal",
+            "geral": 0,
+            "nomes": [
+                "Força",
+                "Destreza",
+                "Constituição",
+                "Atenção",
+                "Inteligência",
+                "Sabedoria",
+                "Carisma",
+                "Magia"
+            ],
+            "value": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        {
+            "title": "Combate",
+            "geral": 0,
+            "geralCalc": {
+                "type": "2211",
+                "val1": "0",
+                "val2": "1",
+                "val3": "2",
+                "val4": "3"
+            },
+            "color": "red",
+            "nomes": [
+                "Luta",
+                "Armamento Pesado",
+                "Armamento Médio",
+                "Armamento Leve",
+                "Guarda"
+            ],
+            "nat": [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "add": [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "tot": [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "Calcs": [
+                {
+                    "type": "b",
+                    "val1": 0,
+                    "val2": 1
+                },
+                {
+                    "type": "b",
+                    "val1": 2,
+                    "val2": 1
+                },
+                {
+                    "type": "a",
+                    "val1": 0,
+                    "val2": 1
+                },
+                {
+                    "type": "b",
+                    "val1": 1,
+                    "val2": 3
+                },
+                {
+                    "type": "b",
+                    "val1": 2,
+                    "val2": 0
+                }
+            ]
+        },
+        {
+            "title": "Corpo",
+            "geral": 0,
+            "geralCalc": {
+                "type": "2211",
+                "val1": "1",
+                "val2": "2",
+                "val3": "0",
+                "val4": "3"
+            },
+            "color": "blue",
+            "nomes": [
+                "Atletismo",
+                "Furtividade",
+                "Manejo",
+                "Resiliência"
+            ],
+            "nat": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "add": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "tot": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "Calcs": [
+                {
+                    "type": "a",
+                    "val1": 1,
+                    "val2": 2
+                },
+                {
+                    "type": "b",
+                    "val1": 1,
+                    "val2": 3
+                },
+                {
+                    "type": "a",
+                    "val1": 1,
+                    "val2": 1
+                },
+                {
+                    "type": "b",
+                    "val1": 2,
+                    "val2": 0
+                }
+            ]
+        },
+        {
+            "title": "Ambiente",
+            "geral": 0,
+            "geralCalc": {
+                "type": "2211",
+                "val1": "3",
+                "val2": "3",
+                "val3": "4",
+                "val4": "3"
+            },
+            "color": "yellow",
+            "nomes": [
+                "Percepção",
+                "Investigação",
+                "Pontaria",
+                "Intuição"
+            ],
+            "nat": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "add": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "tot": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "Calcs": [
+                {
+                    "type": "a",
+                    "val1": 3,
+                    "val2": 3
+                },
+                {
+                    "type": "b",
+                    "val1": 4,
+                    "val2": 3
+                },
+                {
+                    "type": "b",
+                    "val1": 3,
+                    "val2": 1
+                },
+                {
+                    "type": "b",
+                    "val1": 5,
+                    "val2": 3
+                }
+            ]
+        },
+        {
+            "title": "Relações",
+            "geral": 0,
+            "geralCalc": {
+                "type": "2211",
+                "val1": "6",
+                "val2": "6",
+                "val3": "4",
+                "val4": "5"
+            },
+            "color": "green",
+            "nomes": [
+                "Persuasão",
+                "Intimidação",
+                "Performance",
+                "Animais"
+            ],
+            "nat": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "add": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "tot": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "Calcs": [
+                {
+                    "type": "b",
+                    "val1": 6,
+                    "val2": 4
+                },
+                {
+                    "type": "a",
+                    "val1": 6,
+                    "val2": 6
+                },
+                {
+                    "type": "b",
+                    "val1": 6,
+                    "val2": 1
+                },
+                {
+                    "type": "b",
+                    "val1": 6,
+                    "val2": 5
+                }
+            ]
+        },
+        {
+            "title": "Magia",
+            "geral": 0,
+            "geralCalc": {
+                "type": "2211",
+                "val1": "7",
+                "val2": "7",
+                "val3": "5",
+                "val4": "4"
+            },
+            "color": "magenta",
+            "nomes": [
+                "Conjuração",
+                "Encantamento",
+                "Invocação",
+                "Ilusão"
+            ],
+            "nat": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "add": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "tot": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "Calcs": [
+                {
+                    "type": "b",
+                    "val1": 7,
+                    "val2": 4
+                },
+                {
+                    "type": "b",
+                    "val1": 7,
+                    "val2": 4
+                },
+                {
+                    "type": "b",
+                    "val1": 7,
+                    "val2": 5
+                },
+                {
+                    "type": "b",
+                    "val1": 7,
+                    "val2": 5
+                }
+            ]
+        }
+    ]
+}
