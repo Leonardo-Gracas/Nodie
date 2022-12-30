@@ -15,7 +15,7 @@ function getSaves() {
     for (let i = 0; i < 3; i++) {
         saves[i] = JSON.parse(localStorage.getItem('save_' + i))
         if (saves[i] != null) {
-            nome = saves[i].NomePersonagem == null ? 'Sem Nome' : saves[i].NomePersonagem
+            nome = saves[i].NomePersonagem == '' ? 'Sem Nome' : saves[i].NomePersonagem
             _header.innerHTML += '<button class="save_slot" onclick="upload(\'s\', ' + i + ')">' + nome + '</button>'
         } else {
             _header.innerHTML += '<button class="save_slot" onclick="upload(\'n\', ' + i + ')">Vazio</button>'
