@@ -1,6 +1,27 @@
+let Data
 let Table
+let saves = [null, null, null]
+let this_file = 0;
 
 let exibition = false
+
+getSaves()
+
+function getSaves() {
+    let _header = document.getElementById('header')
+    _header.innerHTML = ''
+    let _content_body = document.getElementById('main')
+    _content_body.innerHTML = ''
+    for (let i = 0; i < 3; i++) {
+        saves[i] = JSON.parse(localStorage.getItem('save_' + i))
+        if (saves[i] != null) {
+            nome = saves[i].NomePersonagem == null ? 'Sem Nome' : saves[i].NomePersonagem
+            _header.innerHTML += '<button class="save_slot" onclick="upload(\'s\', ' + i + ')">' + nome + '</button>'
+        } else {
+            _header.innerHTML += '<button class="save_slot" onclick="upload(\'n\', ' + i + ')">Vazio</button>'
+        }
+    }
+}
 
 function changeMode() {
     exibition = !exibition
@@ -14,21 +35,54 @@ function changeMode() {
     }
 }
 
-upload()
+function upload(tem_salvo, num) {
+    let _body = document.getElementsByTagName('body')[0]
+    console.log(Data)
+    _body.innerHTML = '<header id="header"> <button onclick="getSaves()">↩</button> </header><div id="main"><button class="Mode" defer onclick=changeMode()><svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 48 48"><title>eye-open</title><g id="Layer_2" data-name="Layer 2">  <g id="invisible_box" data-name="invisible box"><rect width="48" height="48" fill="none"/>  </g>  <g id="icons_Q2" data-name="icons Q2"><path d="M45.3,22.1h0C43.2,19.5,35.4,11,24,11S4.8,19.5,2.7,22.1a3,3,0,0,0,0,3.8C4.8,28.5,12.6,37,24,37s19.2-8.5,21.3-11.1A3,3,0,0,0,45.3,22.1ZM24,33c-8.8,0-15.3-6.2-17.7-9,2.4-2.8,8.9-9,17.7-9s15.3,6.2,17.7,9C39.3,26.8,32.8,33,24,33Z"/><circle cx="24" cy="24" r="6"/></g></g></svg></button><section id="Perfil"><input type="text" placeholder="Nome" onchange=save() id="NomePersonagem"></section><section id="Tabelas"></section></div>'
 
-function upload() {
+    console.log(_body)
+    try {
+        this_file = num
+        if (tem_salvo == 's') {
+            let index = 'save_' + num
+
+            let data = JSON.parse(localStorage.getItem(index))
+            Data = data
+            Table = data.tables
+            console.log(Data)
+            readCode(Table)
+            return
+        }
+
+    }
+    catch (err) {
+        localStorage.removeItem('save_' + tem_salvo)
+        console.log('Removed')
+    }
+
     fetch('./content.json')
         .then((res) => {
             return res.json();
         })
         .then((data) => {
             console.log(data)
+            Data = data
             Table = data.tables
             readCode(Table)
         });
 }
 
+function save() {
+    Data.tables = Table
+    let nome = document.getElementById('NomePersonagem')
+    Data.NomePersonagem = nome.value
+    localStorage.setItem('save_' + this_file, JSON.stringify(Data))
+}
+
 function readCode(table) {
+    let _input_nome = document.getElementById('NomePersonagem')
+    _input_nome.setAttribute('value', Data.NomePersonagem)
+
     let _main = document.getElementById('Tabelas')
     _main.innerHTML = ''
     let _main_table = document.createElement('table')
@@ -50,7 +104,7 @@ function readCode(table) {
 
     for (let i = 0; i < table[0].nomes.length; i++) {
         _lines[Math.floor(i / 2)].innerHTML += '<td class="main_nome"><p>' + table[0].nomes[i] + '</p></td>' +
-            '<td><input class="main_input" type="text" oninput="setMain()" placeholder=0 defaultvalue=' + table[0].value[i] + '></td>'
+            '<td><input class="main_input" type="text" oninput="setMain()" placeholder=0 value=' + table[0].value[i] + '></td>'
     }
     for (let i = 0; i < numLines; i++) {
         _main_table.appendChild(_lines[i])
@@ -94,7 +148,7 @@ function readCode(table) {
                 '<tr>' +
                 '<td class="naming"><p>' + table.nomes[i] + '</p></td>' +
                 '<td><p class="nat">' + table.nat[i] + '</p></td>' +
-                '<td><input class="add" type="text" placeholder=0 oninput="setTable(' + "'" + table.title + "'" + ', ' + j + ')" defaultvalue="" value=' + table.add[i] + '></td>' +
+                '<td><input class="add" type="text" placeholder=0 oninput="setTable(' + "'" + table.title + "'" + ', ' + j + ')" value=' + table.add[i] + '></td>' +
                 '<td><p class="tot">' + table.tot[i] + '</p></td>' +
                 '</tr>'
         }
@@ -172,10 +226,10 @@ function readCodeExibition(table) {
     }
 
     let ps = document.getElementsByTagName('p')
-    for(let i = 0; i < ps.length; i++){
+    for (let i = 0; i < ps.length; i++) {
         ps[i].setAttribute('class', 'Exibition-P')
         let str = ps[i].innerText
-        if(str.includes('Armamento')){
+        if (str.includes('Armamento')) {
             str = str.replace('Armamento', 'Arm.')
             ps[i].innerText = str
         }
@@ -298,4 +352,5 @@ function setTable(table_name, index) {
 
     let _geral = _table.getElementsByTagName('strong')[0]
     _geral.innerText = geral
+    save()
 }
