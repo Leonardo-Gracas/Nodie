@@ -1,5 +1,11 @@
 {   
-    "NomePersonagem": null,
+    "NomePersonagem": "",
+    "stats":{
+        "hp": 0,
+        "def":0,
+        "red":0,
+        "agl":0
+    },
     "tables": [
         {
             "title": "Principal",

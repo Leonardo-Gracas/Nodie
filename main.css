@@ -14,3 +14,14 @@ svg{
 #Main{
     display: flex;
 }
+
+.front{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+@media (max-width: 700px) {
+    .front{
+        flex-direction: column;
+    }
+}

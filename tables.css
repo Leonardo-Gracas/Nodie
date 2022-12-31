@@ -1,5 +1,6 @@
 header{
     display: flex;
+    flex-direction: column;
 }
 
 header button{
@@ -32,7 +33,9 @@ header button:hover{
     display: flex;
     flex: 1;
     overflow-x: scroll;
-    padding: 18px;
+    padding-block: 18px;
+    max-width: 70%;
+    margin-inline-start: 18px;
 }
 
 table {
@@ -125,4 +128,11 @@ input {
 .Exibition-P{
     padding: 12px 22px;
     font-size: 18px;
+}
+
+@media (max-width: 700px) {
+    #Tabelas{
+        max-width: 95%;
+        margin: 4px;
+    }
 }

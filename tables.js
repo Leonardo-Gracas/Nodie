@@ -38,7 +38,9 @@ function changeMode() {
 function upload(tem_salvo, num) {
     let _body = document.getElementsByTagName('body')[0]
     console.log(Data)
-    _body.innerHTML = '<header id="header"> <button onclick="getSaves()">↩</button> </header><div id="main"><button class="Mode" defer onclick=changeMode()><svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 48 48"><title>eye-open</title><g id="Layer_2" data-name="Layer 2">  <g id="invisible_box" data-name="invisible box"><rect width="48" height="48" fill="none"/>  </g>  <g id="icons_Q2" data-name="icons Q2"><path d="M45.3,22.1h0C43.2,19.5,35.4,11,24,11S4.8,19.5,2.7,22.1a3,3,0,0,0,0,3.8C4.8,28.5,12.6,37,24,37s19.2-8.5,21.3-11.1A3,3,0,0,0,45.3,22.1ZM24,33c-8.8,0-15.3-6.2-17.7-9,2.4-2.8,8.9-9,17.7-9s15.3,6.2,17.7,9C39.3,26.8,32.8,33,24,33Z"/><circle cx="24" cy="24" r="6"/></g></g></svg></button><section id="Perfil"><input type="text" placeholder="Nome" onchange=save() id="NomePersonagem"></section><section id="Tabelas"></section></div>'
+    _body.innerHTML = ''
+    _body.innerHTML += '<header id="header"> <button onclick="getSaves()">↩</button> </header>'
+    _body.innerHTML += '<div id="main"><button class="Mode" defer onclick=changeMode()><svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 48 48"><title>eye-open</title><g id="Layer_2" data-name="Layer 2">  <g id="invisible_box" data-name="invisible box"><rect width="48" height="48" fill="none"/>  </g>  <g id="icons_Q2" data-name="icons Q2"><path d="M45.3,22.1h0C43.2,19.5,35.4,11,24,11S4.8,19.5,2.7,22.1a3,3,0,0,0,0,3.8C4.8,28.5,12.6,37,24,37s19.2-8.5,21.3-11.1A3,3,0,0,0,45.3,22.1ZM24,33c-8.8,0-15.3-6.2-17.7-9,2.4-2.8,8.9-9,17.7-9s15.3,6.2,17.7,9C39.3,26.8,32.8,33,24,33Z"/><circle cx="24" cy="24" r="6"/></g></g></svg></button><div class="front"><section id="Perfil"></section><section id="Tabelas"></section></div></div>'
 
     console.log(_body)
     try {
@@ -80,6 +82,17 @@ function save() {
 }
 
 function readCode(table) {
+    let _perfil = document.getElementById('Perfil')
+    _perfil.innerHTML = ''
+    _perfil.innerHTML += '<input type="text" placeholder="Nome" onchange=save() id="NomePersonagem">'
+    _perfil.innerHTML += '<div id="stats"></div>'
+
+    let _stats = document.getElementById('stats')
+    _stats.innerHTML += '<strong id="hp"></strong>'
+    _stats.innerHTML += '<strong id="def"></strong>'
+    _stats.innerHTML += '<strong id="red"></strong>'
+    _stats.innerHTML += '<strong id="agl"></strong>'
+
     let _input_nome = document.getElementById('NomePersonagem')
     _input_nome.setAttribute('value', Data.NomePersonagem)
 
@@ -353,4 +366,32 @@ function setTable(table_name, index) {
     let _geral = _table.getElementsByTagName('strong')[0]
     _geral.innerText = geral
     save()
+    setStats()
+}
+
+function setStats() {
+    let MainValues = Data.tables[0].value
+
+    let _hp = document.getElementById('hp')
+    let hp = 1 + MainValues[2] * 3 + MainValues[0] * 2
+    _hp.innerHTML = 'Hp:  <input type="text"  oninput="this.style.width = ((this.value.length + 1) * 10) + \'px\';" id="hpAtual" value=' + hp + ' />/' + hp
+    Data.stats.hp = hp
+
+    let guarda = Data.tables[1].tot[4]
+    let _def = document.getElementById('def')
+    let def = 1 + MainValues[2] * 4 + MainValues[0] + guarda
+    _def.innerHTML = 'Defesa: ' + def
+    Data.stats.def = def
+
+    let _red = document.getElementById('red')
+    let red = MainValues[2] * 2
+    let extra = guarda > 1 ? ' + 1d' + (Math.floor(guarda / 2) * 2) : ''
+    _red.innerHTML = red > 0 ? 'Redução: 1d' + red + extra : 'red: 0'
+    Data.stats.red = red
+
+    let atletismo = Data.tables[2].tot[0]
+    let _agl = document.getElementById('agl')
+    let agl = -5 + MainValues[1] * 4 + MainValues[3] + atletismo
+    _agl.innerHTML = 'Agilidade: 1d6 ' + (agl == 0 ? '' : agl < 0 ? '- ' : '+ ') + (agl == 0 ? '' : Math.abs(agl))
+    Data.stats.agl = agl
 }
