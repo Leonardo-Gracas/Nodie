@@ -437,7 +437,7 @@ function setInventory() {
         let item_nome = document.getElementById("item_" + i + "_nome")
         item_nome.setAttribute('oninput', 'setItems(), resize(' + i + ')')
         item_nome.setAttribute('class', 'nome')
-        
+
         let item_qtd = document.getElementById("item_" + i + "_qtd")
         item_qtd.setAttribute('value', Data.inventory[i].qtd)
         item_qtd.setAttribute('oninput', 'setItems()')
@@ -446,8 +446,8 @@ function setInventory() {
         resize(i)
     }
 
-    window.addEventListener('resize', (e) =>{
-        for(let j = 0; j < Data.inventory.length; j++){
+    window.addEventListener('resize', (e) => {
+        for (let j = 0; j < Data.inventory.length; j++) {
             resize(j)
         }
     })
@@ -486,21 +486,21 @@ function removeItem(index) {
 }
 
 function resize(index) {
-    let element = document.getElementById('item_' + index + '_nome')
-    element.style.height = '16px'
-    element.style.height = element.scrollHeight + 'px'
+    try {
+        let element = document.getElementById('item_' + index + '_nome')
+        element.style.height = '16px'
+        element.style.height = element.scrollHeight + 'px'
 
-    let qtd = document.getElementById('item_' + index + '_qtd')
-    qtd.style.height = '16px'
-    qtd.style.height = element.scrollHeight + 'px'
+        let qtd = document.getElementById('item_' + index + '_qtd')
+        qtd.style.height = '16px'
+        qtd.style.height = element.scrollHeight + 'px'
 
-    let button = document.getElementById('remove_button_' + index)
-    button.style.height = '16px'
-    button.style.height = element.scrollHeight + 'px'
-
-    console.log('==========')
-    console.log(index)
-    console.log(element.scrollHeight)
+        let button = document.getElementById('remove_button_' + index)
+        button.style.height = '16px'
+        button.style.height = element.scrollHeight + 'px'
+    } catch (err){
+        return
+    }
 }
 
 function dowload_file() {
@@ -524,7 +524,7 @@ function open_file() {
 
 }
 
-function log_file (event) {
+function log_file(event) {
 
     localStorage.setItem('save_' + this_file, event.target.result)
     upload('s', this_file)
