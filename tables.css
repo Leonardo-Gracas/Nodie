@@ -117,5 +117,10 @@ table input {
     #Tabelas{
         max-width: 95%;
         margin: 4px;
+        
+    }
+
+    #Tabelas p, #Tabelas input{
+        font-size: 18px;
     }
 }

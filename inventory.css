@@ -91,14 +91,16 @@
 @media (max-width: 700px) {
     #inventory{
         width: 90%;
-        margin: 0 auto;
+        height: 400px;
+        margin: auto;
+        margin-bottom: 18px;
     }
 
     #inventory h3{
         font-size: 24px;
     }
 
-    textarea, #itens input{
+    textarea, #itens input, #add_item{
         font-size: 22px;
     }
 }
