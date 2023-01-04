@@ -370,6 +370,7 @@ function setTable(table_name, index) {
     let geral = table.geral
     for (let i = 0; i < nat.length; i++) {
         // LINPANDO OS INPUTS
+        console.log(add[i].value)
         if (isNaN(add[i].value)) {
             add[i].value = 0
         }
@@ -390,6 +391,7 @@ function setTable(table_name, index) {
 
     let _geral = _table.getElementsByTagName('strong')[0]
     _geral.innerText = geral
+    save()
 }
 
 function setStats() {
