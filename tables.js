@@ -397,7 +397,7 @@ function setStats() {
 
     let _hp = document.getElementById('hp')
     let hp = 1 + MainValues[2] * 3 + MainValues[0] * 2
-    _hp.innerHTML = 'Hp:  <input type="text"  oninput="this.style.width = ((this.value.length + 1) * 10) + \'px\';" id="hpAtual" value=' + hp + ' />/' + hp
+    _hp.innerHTML = 'Hp:  <input type="text"  oninput="this.style.width = this.scrollWidth + \'px\'" id="hpAtual" value=' + hp + ' />/' + hp
     Data.stats.hp = hp
 
     let guarda = Data.tables[1].tot[4]
