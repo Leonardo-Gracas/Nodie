@@ -1,22 +1,3 @@
-header{
-    display: flex;
-    flex-direction: column;
-}
-
-header button{
-    width: 200px;
-    height: 60px;
-    margin: 12px;
-    font-size: 22px;
-    border: 2px dotted black;
-    border-radius: 8px;
-    background-color: transparent;
-}
-
-header button:hover{
-    background-color: #f0f0f0;
-}
-
 .Mode{
     border: 1px solid rgb(22, 22, 22);
     border-radius: 30%;
@@ -41,8 +22,10 @@ header button:hover{
 table {
     border: 1px solid black;
     border-collapse: collapse;
+    border-radius: 6px;
     font-size: 14px;
     margin-left: 16px;
+    display: inline-table;
 }
 
 #main_table thead {
@@ -78,7 +61,7 @@ p {
     padding: 6px;
 }
 
-input {
+table input {
     border: none;
     text-align: center;
     width: 80px;

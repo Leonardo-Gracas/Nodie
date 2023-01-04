@@ -1,0 +1,104 @@
+#lists{
+    display: flex;
+    justify-content: center;
+}
+
+#inventory {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 300px;
+    height: 320px;
+    border: 1px solid black;
+    margin-block: 18px;
+    margin-inline: 0;
+    border-radius: 8px;
+}
+
+#inventory h3{
+    text-align: center;
+    margin-top: 8px;
+    padding-bottom: 6px;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+#itens{
+    display: block;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+    margin-block: 12px;
+    margin-inline: 8px;
+}
+
+#itens .nome{
+    width: 70%;
+    height: 18px;
+    text-align: left;
+    resize: none;
+    padding-left: 6px;
+    border: none;
+    border-right: 1px dashed black;
+}
+
+#itens .qtd{
+    width: 20%;
+    display: flex;
+}
+
+#itens button{
+    background-color: rgb(255, 43, 43);
+    color: white;
+    border: 1px solid black;
+    width: 28px;
+}
+
+#itens button:hover{
+    cursor: pointer;
+    width: 30px;
+    transition: .1s;
+}
+
+#foot{
+    border-top: 1px solid black;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: greenyellow;
+}
+
+#foot button{
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    background-color: transparent;
+}
+
+#foot button:hover{
+    cursor: pointer;
+    padding: 4px;
+    transition: .2s;
+}
+
+@media (max-width: 700px) {
+    #inventory{
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    #inventory h3{
+        font-size: 24px;
+    }
+
+    textarea, #itens input{
+        font-size: 22px;
+    }
+}

@@ -6,22 +6,92 @@
     font-weight: bold;
 }
 
-svg{
+html, body{
+    height: 100%;
+}
+
+svg {
     max-width: 28px;
     height: 28px;
 }
 
-#Main{
+input {
+    text-align: center;
+    border: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+#header {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#header button {
+    width: 100px;
+    height: 50px;
+    margin: 12px;
+    padding: 4px;
+    font-size: 16px;
+    border: 2px solid black;
+    border-radius: 8px;
+    background-color: transparent;
+}
+
+#header button:hover {
+    background-color: #f0f0f0;
+}
+
+#open_file{
+    display: none;
+}
+
+#file_custom{
+    cursor: pointer;
+    width: fit-content;
+    padding: 4px;
+    height: 50px;
+    margin: 12px;
+    border: 2px solid black;
+    border-radius: 8px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    font-size: 16px;
+}
+
+#file_custom:hover{
+    background-color: #f0f0f0;
+}
+
+#files {
+    width: fit-content;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+#Main {
     display: flex;
 }
 
-.front{
+.front {
     display: flex;
     justify-content: space-evenly;
 }
 
 @media (max-width: 700px) {
-    .front{
+    .front {
         flex-direction: column;
     }
 }

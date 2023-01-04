@@ -10,15 +10,24 @@ getSaves()
 function getSaves() {
     let _header = document.getElementById('header')
     _header.innerHTML = ''
+    _header.innerHTML += '<h1>Selecione um slot</h1>'
+    _header.innerHTML += '<div id="slots"></div>'
+    _header.setAttribute('class', 'center')
+
+    let _body = document.querySelector('body')
+    _body.setAttribute('class', 'center')
+
+    let _slots = document.getElementById('slots')
+
     let _content_body = document.getElementById('main')
     _content_body.innerHTML = ''
     for (let i = 0; i < 3; i++) {
         saves[i] = JSON.parse(localStorage.getItem('save_' + i))
         if (saves[i] != null) {
             nome = saves[i].NomePersonagem == '' ? 'Sem Nome' : saves[i].NomePersonagem
-            _header.innerHTML += '<button class="save_slot" onclick="upload(\'s\', ' + i + ')">' + nome + '</button>'
+            _slots.innerHTML += '<button class="save_slot" onclick="upload(\'s\', ' + i + ')">' + nome + '</button>'
         } else {
-            _header.innerHTML += '<button class="save_slot" onclick="upload(\'n\', ' + i + ')">Vazio</button>'
+            _slots.innerHTML += '<button class="save_slot" onclick="upload(\'n\', ' + i + ')">Vazio</button>'
         }
     }
 }
@@ -36,22 +45,40 @@ function changeMode() {
 }
 
 function upload(tem_salvo, num) {
+
     let _body = document.getElementsByTagName('body')[0]
-    console.log(Data)
+    _body.setAttribute('class', '')
     _body.innerHTML = ''
     _body.innerHTML += '<header id="header"> <button onclick="getSaves()">↩</button> </header>'
-    _body.innerHTML += '<div id="main"><button class="Mode" defer onclick=changeMode()><svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 48 48"><title>eye-open</title><g id="Layer_2" data-name="Layer 2">  <g id="invisible_box" data-name="invisible box"><rect width="48" height="48" fill="none"/>  </g>  <g id="icons_Q2" data-name="icons Q2"><path d="M45.3,22.1h0C43.2,19.5,35.4,11,24,11S4.8,19.5,2.7,22.1a3,3,0,0,0,0,3.8C4.8,28.5,12.6,37,24,37s19.2-8.5,21.3-11.1A3,3,0,0,0,45.3,22.1ZM24,33c-8.8,0-15.3-6.2-17.7-9,2.4-2.8,8.9-9,17.7-9s15.3,6.2,17.7,9C39.3,26.8,32.8,33,24,33Z"/><circle cx="24" cy="24" r="6"/></g></g></svg></button><div class="front"><section id="Perfil"></section><section id="Tabelas"></section></div></div>'
+    _body.innerHTML += '<div id="main"></div>'
 
-    console.log(_body)
+
+    let _header = document.getElementById('header')
+    _header.setAttribute('class', '')
+    _header.innerHTML += '<div id="files"><button id="download_file">Download da ficha</button></div>'
+    let _dowload = document.getElementById("download_file")
+    _dowload.setAttribute('onclick', 'dowload_file()')
+
+    let _files = document.getElementById('files')
+    _files.innerHTML += '<label id="file_custom"><input type="file" Name="." accept=".json" oninput="open_file()" id="open_file">Abrir arquivo</label>'
+
+
+
+    let _main = document.getElementById('main')
+    _main.innerHTML = ''
+    _main.innerHTML += '<button class="Mode" defer onclick=changeMode()><svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 48 48"><title>eye-open</title><g id="Layer_2" data-name="Layer 2">  <g id="invisible_box" data-name="invisible box"><rect width="48" height="48" fill="none"/>  </g>  <g id="icons_Q2" data-name="icons Q2"><path d="M45.3,22.1h0C43.2,19.5,35.4,11,24,11S4.8,19.5,2.7,22.1a3,3,0,0,0,0,3.8C4.8,28.5,12.6,37,24,37s19.2-8.5,21.3-11.1A3,3,0,0,0,45.3,22.1ZM24,33c-8.8,0-15.3-6.2-17.7-9,2.4-2.8,8.9-9,17.7-9s15.3,6.2,17.7,9C39.3,26.8,32.8,33,24,33Z"/><circle cx="24" cy="24" r="6"/></g></g></svg></button>'
+    _main.innerHTML += '<div class="front"><section id="Perfil"></section><section id="Tabelas"></section></div>'
+    _main.innerHTML += '<div id="lists"><section id="inventory"></section></div>'
+
+
+    this_file = num
     try {
-        this_file = num
         if (tem_salvo == 's') {
             let index = 'save_' + num
 
             let data = JSON.parse(localStorage.getItem(index))
             Data = data
             Table = data.tables
-            console.log(Data)
             readCode(Table)
             return
         }
@@ -59,7 +86,6 @@ function upload(tem_salvo, num) {
     }
     catch (err) {
         localStorage.removeItem('save_' + tem_salvo)
-        console.log('Removed')
     }
 
     fetch('./content.json')
@@ -67,7 +93,6 @@ function upload(tem_salvo, num) {
             return res.json();
         })
         .then((data) => {
-            console.log(data)
             Data = data
             Table = data.tables
             readCode(Table)
@@ -316,7 +341,7 @@ function setNats() {
         _table.querySelector('strong').innerHTML = table.geral
         setTable(table.title, j)
     }
-
+    setStats()
 }
 
 function calc2211(val1, val2, val3, val4) {
@@ -365,8 +390,6 @@ function setTable(table_name, index) {
 
     let _geral = _table.getElementsByTagName('strong')[0]
     _geral.innerText = geral
-    save()
-    setStats()
 }
 
 function setStats() {
@@ -394,4 +417,115 @@ function setStats() {
     let agl = -5 + MainValues[1] * 4 + MainValues[3] + atletismo
     _agl.innerHTML = 'Agilidade: 1d6 ' + (agl == 0 ? '' : agl < 0 ? '- ' : '+ ') + (agl == 0 ? '' : Math.abs(agl))
     Data.stats.agl = agl
+
+    setInventory()
+}
+
+function setInventory() {
+    let _inventory = document.getElementById('inventory')
+    _inventory.innerHTML = ''
+    _inventory.innerHTML += '<h3>Inventário</h3>'
+    _inventory.innerHTML += '<div id="itens"></div>'
+    _inventory.innerHTML += '<div id="foot"></div>'
+
+    let _itens = document.getElementById('itens')
+    _itens.innerHTML = ''
+
+    for (let i = 0; i < Data.inventory.length; i++) {
+        _itens.innerHTML += '<div class="item"><textarea type="text" id="item_' + i + '_nome">' + Data.inventory[i].nome + '</textarea><input type="number" min=1 id="item_' + i + '_qtd"><button onclick="removeItem(' + i + ')" id="remove_button_' + i + '">X</button></div>'
+
+        let item_nome = document.getElementById("item_" + i + "_nome")
+        item_nome.setAttribute('oninput', 'setItems(), resize(' + i + ')')
+        item_nome.setAttribute('class', 'nome')
+        
+        let item_qtd = document.getElementById("item_" + i + "_qtd")
+        item_qtd.setAttribute('value', Data.inventory[i].qtd)
+        item_qtd.setAttribute('oninput', 'setItems()')
+        item_qtd.setAttribute('class', 'qtd')
+        item_qtd.setAttribute('placeholder', 'Qtd')
+        resize(i)
+    }
+
+    window.addEventListener('resize', (e) =>{
+        for(let j = 0; j < Data.inventory.length; j++){
+            resize(j)
+        }
+    })
+    let _foot = document.getElementById('foot')
+    _foot.innerHTML = ''
+    _foot.innerHTML += '<button id="add_item" onclick="addItem()">Adicionar</button>'
+
+    save()
+}
+
+function setItems() {
+    let inventory = Data.inventory
+
+    let _itens = document.getElementById('itens')
+    let inps = _itens.getElementsByTagName('input')
+    let texts = _itens.querySelectorAll('textarea')
+
+    for (let i = 0; i < inventory.length; i++) {
+        inventory[i].nome = texts[i].value
+        inventory[i].qtd = Number(inps[i].value)
+    }
+
+    Data.inventory = inventory
+    save()
+}
+
+function addItem() {
+    Data.inventory[Data.inventory.length] = { nome: '', qtd: 0 }
+    setInventory()
+}
+
+function removeItem(index) {
+    console.log(`Removido: ${Data.inventory[index].nome}, x${Data.inventory[index].qtd}`)
+    Data.inventory.splice(index, 1)
+    setInventory()
+}
+
+function resize(index) {
+    let element = document.getElementById('item_' + index + '_nome')
+    element.style.height = '16px'
+    element.style.height = element.scrollHeight + 'px'
+
+    let qtd = document.getElementById('item_' + index + '_qtd')
+    qtd.style.height = '16px'
+    qtd.style.height = element.scrollHeight + 'px'
+
+    let button = document.getElementById('remove_button_' + index)
+    button.style.height = '16px'
+    button.style.height = element.scrollHeight + 'px'
+
+    console.log('==========')
+    console.log(index)
+    console.log(element.scrollHeight)
+}
+
+function dowload_file() {
+    let dataStr = JSON.stringify(Data);
+    let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+
+    let exportFileDefaultName = Data.NomePersonagem + '.json';
+
+    let linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click()
+}
+
+function open_file() {
+    let _input = document.getElementById('open_file')
+
+    let reader = new FileReader()
+    reader.onload = log_file
+    reader.readAsText(_input.files[0])
+
+}
+
+function log_file (event) {
+
+    localStorage.setItem('save_' + this_file, event.target.result)
+    upload('s', this_file)
 }
