@@ -1,15 +1,15 @@
-#Perfil{
+#Perfil {
     display: flex;
     flex-direction: column;
     justify-content: start;
     padding: 18px;
-    width: 300px;
+    min-width: 320px;
     border: 1px solid black;
     margin-inline-start: 10px;
     border-radius: 8px;
 }
 
-#stats{
+#stats {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -17,36 +17,43 @@
     padding-block: 8px;
 }
 
-#hpAtual{
+#nivel{
+    display: flex;
+    align-items: center;
+}
+
+#hpAtual,
+#nivel_inp {
     text-align: right;
     font-size: 16px;
     width: 18px;
 }
 
-#stats strong{
+#stats strong {
     font-size: 16px;
     margin-block: 3px;
     border-bottom: 1px solid black;
 }
 
-#NomePersonagem{
+#NomePersonagem {
     font-size: 24px;
     border-bottom: 2px solid black;
     width: 100%;
 }
 
 @media (max-width: 700px) {
-    #Perfil{
+    #Perfil {
         width: 90%;
-        margin: 0 auto;
+        margin-inline: 12px;
     }
 
-    #hpAtual{
+    #hpAtual,
+    #nivel_inp {
         font-size: 24px;
         width: 24px;
     }
 
-    #stats strong{
+    #stats strong {
         font-size: 24px;
     }
 }

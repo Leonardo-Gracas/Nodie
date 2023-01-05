@@ -3,6 +3,16 @@ let Table
 let saves = [null, null, null]
 let this_file = 0;
 
+const att_limits = [8, 10, 11, 12, 13, 14, 16, 17, 19, 22, 24]
+const main_limits = [2, 3, 3, 4, 4, 4, 5, 5, 6, 7, 8]
+const direct_limits = [3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16]
+const geral_limits = [0.5, 0.7, 1, 1, 1.2, 1.2, 1.4, 1.4, 1.6, 1.8, 10]
+
+let A_limit = 8
+let M_limit = 2
+let D_limit = 3
+let G_limit = 0.5
+
 let exibition = false
 
 getSaves()
@@ -12,7 +22,7 @@ function getSaves() {
     _header.innerHTML = ''
     _header.innerHTML += '<h1>Selecione um slot</h1>'
     _header.innerHTML += '<div id="slots"></div>'
-    _header.setAttribute('class', 'center')
+    _header.setAttribute('class', 'upper1')
 
     let _body = document.querySelector('body')
     _body.setAttribute('class', 'center')
@@ -25,10 +35,19 @@ function getSaves() {
         saves[i] = JSON.parse(localStorage.getItem('save_' + i))
         if (saves[i] != null) {
             nome = saves[i].NomePersonagem == '' ? 'Sem Nome' : saves[i].NomePersonagem
-            _slots.innerHTML += '<button class="save_slot" onclick="upload(\'s\', ' + i + ')">' + nome + '</button>'
+            _slots.innerHTML += '<section class="slt"><button class="save_slot" onclick="upload(\'s\', ' + i + ')">' + nome + '</button><button id="deleteSlot" onclick="deleteSlot('+i+')" >x</button></section>'
         } else {
-            _slots.innerHTML += '<button class="save_slot" onclick="upload(\'n\', ' + i + ')">Vazio</button>'
+            _slots.innerHTML += '<section class="slt"><button class="save_slot" onclick="upload(\'n\', ' + i + ')">Vazio</button></section>'
         }
+    }
+}
+
+function deleteSlot(index) {
+    let nome = JSON.parse(localStorage.getItem('save_' + index)).NomePersonagem
+    if(nome == ''){nome = 'Sem nome'}
+    if(confirm('Quer mesmo deletar o personagem "' + nome + '"?\nEssa ação não tem volta')){
+        localStorage.removeItem('save_' + index)
+        getSaves()
     }
 }
 
@@ -42,20 +61,21 @@ function changeMode() {
         document.getElementsByClassName('Mode')[0].innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 48 48"><title>eye-open</title><g id="Layer_2" data-name="Layer 2">  <g id="invisible_box" data-name="invisible box"><rect width="48" height="48" fill="none"/>  </g>  <g id="icons_Q2" data-name="icons Q2"><path d="M45.3,22.1h0C43.2,19.5,35.4,11,24,11S4.8,19.5,2.7,22.1a3,3,0,0,0,0,3.8C4.8,28.5,12.6,37,24,37s19.2-8.5,21.3-11.1A3,3,0,0,0,45.3,22.1ZM24,33c-8.8,0-15.3-6.2-17.7-9,2.4-2.8,8.9-9,17.7-9s15.3,6.2,17.7,9C39.3,26.8,32.8,33,24,33Z"/><circle cx="24" cy="24" r="6"/></g></g></svg>'
         readCode(Table)
     }
+    setStats()
 }
 
 function upload(tem_salvo, num) {
 
     let _body = document.getElementsByTagName('body')[0]
-    _body.setAttribute('class', '')
+    _body.removeAttribute('class')
     _body.innerHTML = ''
     _body.innerHTML += '<header id="header"> <button onclick="getSaves()">↩</button> </header>'
     _body.innerHTML += '<div id="main"></div>'
 
 
     let _header = document.getElementById('header')
-    _header.setAttribute('class', '')
-    _header.innerHTML += '<div id="files"><button id="download_file">Download da ficha</button></div>'
+    _header.setAttribute('class', 'upper2')
+    _header.innerHTML += '<div id="files"><button id="download_file">Download</button></div>'
     let _dowload = document.getElementById("download_file")
     _dowload.setAttribute('onclick', 'dowload_file()')
 
@@ -67,9 +87,8 @@ function upload(tem_salvo, num) {
     let _main = document.getElementById('main')
     _main.innerHTML = ''
     _main.innerHTML += '<button class="Mode" defer onclick=changeMode()><svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 48 48"><title>eye-open</title><g id="Layer_2" data-name="Layer 2">  <g id="invisible_box" data-name="invisible box"><rect width="48" height="48" fill="none"/>  </g>  <g id="icons_Q2" data-name="icons Q2"><path d="M45.3,22.1h0C43.2,19.5,35.4,11,24,11S4.8,19.5,2.7,22.1a3,3,0,0,0,0,3.8C4.8,28.5,12.6,37,24,37s19.2-8.5,21.3-11.1A3,3,0,0,0,45.3,22.1ZM24,33c-8.8,0-15.3-6.2-17.7-9,2.4-2.8,8.9-9,17.7-9s15.3,6.2,17.7,9C39.3,26.8,32.8,33,24,33Z"/><circle cx="24" cy="24" r="6"/></g></g></svg></button>'
-    _main.innerHTML += '<div class="front"><section id="Perfil"></section><section id="Tabelas"></section></div>'
-    _main.innerHTML += '<div id="lists"><section id="pericias"></section><section id="inventory"></section></div>'
-
+    _main.innerHTML += '<div class="front"><section id="principal"><section id="Perfil"></section><section id="atributos"></section></section><section id="Tabelas"></section></div>'
+    _main.innerHTML += '<div id="lists"><section id="pericias"></section><section id="inventory"></section><section id="magias"></section></div>'
 
     this_file = num
     try {
@@ -113,17 +132,22 @@ function readCode(table) {
     _perfil.innerHTML += '<div id="stats"></div>'
 
     let _stats = document.getElementById('stats')
+    _stats.innerHTML += '<strong id="nivel"></strong>'
     _stats.innerHTML += '<strong id="hp"></strong>'
+    _stats.innerHTML += '<strong id="dmg"></strong>'
     _stats.innerHTML += '<strong id="def"></strong>'
     _stats.innerHTML += '<strong id="red"></strong>'
     _stats.innerHTML += '<strong id="agl"></strong>'
-    _stats.innerHTML += '<strong id="dmg"></strong>'
 
     let _input_nome = document.getElementById('NomePersonagem')
     _input_nome.setAttribute('value', Data.NomePersonagem)
 
     let _main = document.getElementById('Tabelas')
     _main.innerHTML = ''
+
+    let _atributos = document.getElementById('atributos')
+    _atributos.innerHTML = ''
+
     let _main_table = document.createElement('table')
     _main_table.setAttribute('id', 'main_table')
 
@@ -150,7 +174,7 @@ function readCode(table) {
     }
 
     // INSERINDO
-    _main.appendChild(_main_table)
+    _atributos.appendChild(_main_table)
 
 
     // DIRETAS
@@ -198,12 +222,16 @@ function readCode(table) {
         _main.appendChild(_table)
     }
 
-    setNats()
+    changeLevel(0, true)
 }
 
 function readCodeExibition(table) {
     let _main = document.getElementById('Tabelas')
     _main.innerHTML = ''
+
+    let _atributos = document.getElementById('atributos')
+    _atributos.innerHTML = ''
+
     let _main_table = document.createElement('table')
     _main_table.setAttribute('id', 'main_table')
 
@@ -229,7 +257,7 @@ function readCodeExibition(table) {
     }
 
     // INSERINDO
-    _main.appendChild(_main_table)
+    _atributos.appendChild(_main_table)
 
 
     // DIRETAS
@@ -287,6 +315,10 @@ function setMain() {
         if (inps[i].value > 100) {
             inps[i].value = 100
         }
+        if (inps[i].value > M_limit) {
+            inps[i].value = M_limit
+        }
+
         inps[i].value = Math.floor(inps[i].value)
 
 
@@ -294,9 +326,9 @@ function setMain() {
     }
 
     // SOMANDO OS INPUTS
-    let geral = 0
+    let geral = A_limit
     for (let i = 0; i < inps.length; i++) {
-        geral += Number(inps[i].value)
+        geral -= Number(inps[i].value)
     }
 
     Table[0].geral = Math.floor(geral)
@@ -307,8 +339,6 @@ function setMain() {
 }
 
 function setNats() {
-    let _main = document.getElementById('Tabelas')
-
     for (let j = 1; j < Table.length; j++) {
         let table = Table[j]
         let _table = document.getElementById(table.title)
@@ -348,7 +378,7 @@ function setNats() {
 function calc2211(val1, val2, val3, val4) {
     let media = (val1 * 2 + val2 * 2 + val3 + val4) / 6
     media = media * 3
-    return media
+    return Math.floor(media * G_limit)
 }
 
 function linear(val1, val2) {
@@ -377,6 +407,9 @@ function setTable(table_name, index) {
         if (add[i].value < 0) {
             add[i].value = 0
         }
+        if ((Number(add[i].value) + table.nat[i]) > D_limit) {
+            add[i].value = D_limit - table.nat[i]
+        }
         add[i].value = Number(add[i].value)
         table.add[i] = Number(add[i].value)
 
@@ -391,16 +424,28 @@ function setTable(table_name, index) {
 
     let _geral = _table.getElementsByTagName('strong')[0]
     _geral.innerText = geral
-    save()
+    setStats()
 }
 
 function setStats() {
     let MainValues = Data.tables[0].value
 
+    let _nivel = document.getElementById('nivel')
+    if(exibition){
+        _nivel.innerHTML = 'Nivel:  <p id="nivel_inp">'+ Data.stats.nivel +'</p>'
+    } else{
+        _nivel.innerHTML = 'Nivel:  <input type="text" oninput="changeLevel(this, false)" id="nivel_inp" placeholder=' + Data.stats.nivel + ' >'
+    }
+
     let _hp = document.getElementById('hp')
     let hp = 1 + MainValues[2] * 3 + MainValues[0] * 2
-    _hp.innerHTML = 'Hp:  <input type="text"  oninput="resize()"id="hpAtual" value=' + hp + ' />/' + hp
+    _hp.innerHTML = 'Hp:  <input type="text"  oninput="resize()"id="hpAtual" value=' + Data.stats.hpAtual + ' />/' + hp
     Data.stats.hp = hp
+
+    let _dmg = document.getElementById('dmg')
+    let dmg = Math.floor(MainValues[0] * 1.20)
+    _dmg.innerHTML = 'Dano: ' + dmg
+    Data.stats.dmg = dmg
 
     let guarda = Data.tables[1].tot[4]
     let _def = document.getElementById('def')
@@ -420,13 +465,10 @@ function setStats() {
     _agl.innerHTML = 'Agilidade: 1d6 ' + (agl == 0 ? '' : agl < 0 ? '- ' : '+ ') + (agl == 0 ? '' : Math.abs(agl))
     Data.stats.agl = agl
 
-    let _dmg = document.getElementById('dmg')
-    let dmg = Math.floor(MainValues[0] * 1.20)
-    _dmg.innerHTML = 'Dano: ' + dmg
-    Data.stats.dmg = dmg
 
     setInventory()
     setPericias()
+    setMagias()
 }
 
 function setInventory() {
@@ -461,6 +503,9 @@ function setInventory() {
         for (let j = 0; j < Data.pericias.length; j++) {
             habResize(j)
         }
+        for (let j = 0; j < Data.magias.length; j++) {
+            magicResize(j)
+        }
     })
     let _foot = document.getElementById('foot')
     _foot.innerHTML = ''
@@ -469,7 +514,7 @@ function setInventory() {
     save()
 }
 
-function setPericias(){
+function setPericias() {
     let _pericias = document.getElementById('pericias')
     _pericias.innerHTML = ''
     _pericias.innerHTML += '<h3>Perícias / Habilidades</h3>'
@@ -479,7 +524,7 @@ function setPericias(){
     let _habs = document.getElementById('habs')
     _habs.innerHTML = ''
 
-    for(let i = 0; i < Data.pericias.length; i++){
+    for (let i = 0; i < Data.pericias.length; i++) {
         _habs.innerHTML += '<div class="hab"><textarea type="text" id="hab_' + i + '_nome">' + Data.pericias[i].nome + '</textarea><input type="number" min=1 id="hab_' + i + '_qtd"><button onclick="removeHab(' + i + ')" id="remove_hab_button_' + i + '">x</button></div>'
 
         let hab_nome = document.getElementById("hab_" + i + "_nome")
@@ -491,12 +536,38 @@ function setPericias(){
         hab_qtd.setAttribute('oninput', 'setHabs()')
         hab_qtd.setAttribute('class', 'qtd')
         hab_qtd.setAttribute('placeholder', 'Qtd')
+        habResize(i)
     }
 
     let _foot = document.getElementById('hab_foot')
     _foot.innerHTML = ''
     _foot.innerHTML += '<button id="add_hab" onclick="addHab()">Adicionar</button>'
 
+    save()
+}
+
+function setMagias() {
+    let _magias = document.getElementById('magias')
+    _magias.innerHTML = ''
+    _magias.innerHTML += '<h3>Magias</h3>'
+    _magias.innerHTML += '<div id="magics"></div>'
+    _magias.innerHTML += '<div id="magic_foot"></div>'
+
+    let _magics = document.getElementById('magics')
+    _magics.innerHTML = ''
+
+    for (let i = 0; i < Data.magias.length; i++) {
+        _magics.innerHTML += '<div class="magic"><textarea type="text" id="magic_' + i + '_nome">' + Data.magias[i].nome + '</textarea><button onclick="removeMagic(' + i + ')" id="remove_magic_button_' + i + '">x</button></div>'
+
+        let magic_nome = document.getElementById("magic_" + i + "_nome")
+        magic_nome.setAttribute('oninput', 'setMagics(), magicResize(' + i + ')')
+        magic_nome.setAttribute('class', 'nome')
+        magicResize(i)
+    }
+
+    let _foot = document.getElementById('magic_foot')
+    _foot.innerHTML = ''
+    _foot.innerHTML += '<button id="add_magic" onclick="addMagic()">Adicionar</button>'
     save()
 }
 
@@ -516,7 +587,7 @@ function setItems() {
     save()
 }
 
-function setHabs(){
+function setHabs() {
     let pericias = Data.pericias
 
     let _habs = document.getElementById('habs')
@@ -532,6 +603,20 @@ function setHabs(){
     save()
 }
 
+function setMagics() {
+    let magias = Data.magias
+
+    let _magics = document.getElementById('magics')
+    let texts = _magics.querySelectorAll('textarea')
+
+    for (let i = 0; i < magias.length; i++) {
+        magias[i].nome = texts[i].value
+    }
+
+    Data.magias = magias
+    save()
+}
+
 function addItem() {
     Data.inventory[Data.inventory.length] = { nome: '', qtd: 0 }
     setInventory()
@@ -542,9 +627,14 @@ function addHab() {
     setPericias()
 }
 
+function addMagic() {
+    Data.magias[Data.magias.length] = { nome: '', qtd: 0 }
+    setMagias()
+}
+
 function removeItem(index) {
     let nome = Data.inventory[index].nome
-    if(nome == ''){
+    if (nome == '') {
         nome = 'Sem nome'
     }
     let permissao = confirm("Deseja mesmo excluir o seguinte item:\n" + nome)
@@ -557,7 +647,7 @@ function removeItem(index) {
 
 function removeHab(index) {
     let nome = Data.pericias[index].nome
-    if(nome == ''){
+    if (nome == '') {
         nome = 'Sem nome'
     }
     let permissao = confirm("Deseja mesmo excluir a seguinte habilidade:\n" + nome)
@@ -568,10 +658,29 @@ function removeHab(index) {
     }
 }
 
+function removeMagic(index) {
+    let nome = Data.magias[index].nome
+    if (nome == '') {
+        nome = 'Sem nome'
+    }
+    let permissao = confirm("Deseja mesmo excluir a seguinte magia:\n" + nome)
+    if (permissao) {
+        console.log(`Removido: ${Data.magias[index].nome}`)
+        Data.magias.splice(index, 1)
+        setMagias()
+    }
+}
+
 function resize(index) {
     let _hp = document.getElementById('hpAtual')
     _hp.style.width = '14px'
     _hp.style.width = _hp.scrollWidth + 'px'
+    Data.stats.hpAtual = _hp.value
+
+    let _nivel = document.getElementById('nivel_inp')
+    _nivel.style.width = '14px'
+    _nivel.style.width = _nivel.scrollWidth + 'px'
+    save()
     try {
         let element = document.getElementById('item_' + index + '_nome')
         element.style.height = '16px'
@@ -607,6 +716,20 @@ function habResize(index) {
     }
 }
 
+function magicResize(index) {
+    try {
+        let element = document.getElementById('magic_' + index + '_nome')
+        element.style.height = '16px'
+        element.style.height = element.scrollHeight + 'px'
+
+        let button = document.getElementById('remove_magic_button_' + index)
+        button.style.height = '16px'
+        button.style.height = element.scrollHeight + 'px'
+    } catch (err) {
+        return
+    }
+}
+
 function dowload_file() {
     let dataStr = JSON.stringify(Data);
     let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
@@ -632,4 +755,39 @@ function log_file(event) {
 
     localStorage.setItem('save_' + this_file, event.target.result)
     upload('s', this_file)
+}
+
+function changeLevel(inp, way) {
+    if (way) {
+        let level = Data.stats.nivel
+        A_limit = att_limits[level]
+        M_limit = main_limits[level]
+        D_limit = direct_limits[level]
+        G_limit = geral_limits[level]
+        Data.stats.nivel = Number(level)
+        setMain()
+        return
+    } 
+
+    let level = Number(inp.value)
+    if (isNaN(level)) {
+        inp.value = ''
+        return
+    }
+    if (level > 10) {
+        inp.value = Data.stats.nivel
+        return
+    }
+
+    if (confirm('Deseja mudar o nível deste personagem para ' + Number(level) + '?')) {
+        A_limit = att_limits[level]
+        M_limit = main_limits[level]
+        D_limit = direct_limits[level]
+        G_limit = geral_limits[level]
+        Data.stats.nivel = Number(level)
+        setMain()
+    } else {
+        inp.value = ''
+    }
+
 }

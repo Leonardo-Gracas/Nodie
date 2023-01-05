@@ -15,7 +15,7 @@
     flex: 1;
     overflow-x: scroll;
     padding-block: 18px;
-    max-width: 70%;
+    max-width: 32%;
     margin-inline-start: 18px;
 }
 
@@ -28,9 +28,19 @@ table {
     display: inline-table;
 }
 
-#main_table thead {
+#main_table{
+    height: 100%;
+    max-width: 90%;
+}
+
+#main_table thead, #main_table th {
     background-color: black;
     color: white;
+}
+
+#main_table p{
+    font-size: 20px;
+    padding: 4px 14px;
 }
 
 thead {

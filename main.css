@@ -24,14 +24,23 @@ button {
     cursor: pointer;
 }
 
-#header {
+.upper1, .upper2 {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+}
+
+.upper2{
+    flex-direction: row;
+    justify-content: center;
 }
 
 #slots{
     display: flex;
     flex-wrap: wrap;
+    margin-top: 18px;
 }
 
 .center{
@@ -41,18 +50,28 @@ button {
     justify-content: center;
 }
 
-#header button {
+.upper1 button, .upper2 button, .upper2 label {
     width: 100px;
     min-height: fit-content;
-    margin: 12px;
     padding: 4px;
-    font-size: 16px;
+    font-size: 18px;
     border: 2px solid black;
     border-radius: 8px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     background-color: transparent;
 }
 
-#header button:hover {
+.upper2 button{
+    min-height: 100%;
+}
+
+.slt{
+    margin-block: 12px;
+
+}
+
+.upper1 button:hover {
     background-color: #f0f0f0;
 }
 
@@ -64,15 +83,12 @@ button {
     cursor: pointer;
     width: fit-content;
     padding: 4px;
-    height: 50px;
+    height: 100%;
     margin: 12px;
-    border: 2px solid black;
-    border-radius: 8px;
     justify-content: center;
     text-align: center;
     align-items: center;
     display: flex;
-    font-size: 16px;
 }
 
 #file_custom:hover{
@@ -82,6 +98,7 @@ button {
 #files {
     width: fit-content;
     display: flex;
+    margin-inline-start: 12px;
     flex-wrap: nowrap;
     align-items: center;
 }
@@ -92,11 +109,54 @@ button {
 
 .front {
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#principal {
+    display: flex;
+    overflow-x: scroll;
+    max-width: 70%;
+    padding-block: 18px;
+}
+
+#deleteSlot{
+    width: 30px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: rgb(255, 53, 53);
 }
 
 @media (max-width: 700px) {
+    #principal{
+        max-width: 90%;
+        justify-content: left;
+    }
+
+    .upper1{
+        justify-content: center;
+    }
+
+    #slots{
+        flex-direction: column;
+    }
+
+    .upper1 button{
+        font-size: 25px;
+        width: 250px;
+        padding-block: 12px;
+    }
+
+    .upper button{
+        font-size: 18px;
+        width: 100px;
+        padding-block: 12px;
+    }
+
     .front {
         flex-direction: column;
+        align-items: center;
     }
 }
