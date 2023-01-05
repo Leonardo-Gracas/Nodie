@@ -99,11 +99,13 @@
     transition: .2s;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
     #lists{
         justify-content: start;
     }
+}
 
+@media (max-width: 700px) {
     #inventory, #pericias, #magias{
         min-width: 365px;
         height: 400px;
