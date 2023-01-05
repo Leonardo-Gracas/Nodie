@@ -371,7 +371,6 @@ function setTable(table_name, index) {
     let geral = table.geral
     for (let i = 0; i < nat.length; i++) {
         // LINPANDO OS INPUTS
-        console.log(add[i].value)
         if (isNaN(add[i].value)) {
             add[i].value = 0
         }
@@ -479,7 +478,6 @@ function setPericias(){
 
     let _habs = document.getElementById('habs')
     _habs.innerHTML = ''
-    console.log(Data.pericias)
 
     for(let i = 0; i < Data.pericias.length; i++){
         _habs.innerHTML += '<div class="hab"><textarea type="text" id="hab_' + i + '_nome">' + Data.pericias[i].nome + '</textarea><input type="number" min=1 id="hab_' + i + '_qtd"><button onclick="removeHab(' + i + ')" id="remove_hab_button_' + i + '">x</button></div>'
