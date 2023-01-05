@@ -332,5 +332,11 @@
         }
     ],
     "inventory": [
+    ],
+    "pericias": [
+        {
+            "nome": "Medicina",
+            "qtd": 1
+        }
     ]
 }

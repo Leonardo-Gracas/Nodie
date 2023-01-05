@@ -1,9 +1,11 @@
 #lists{
     display: flex;
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    overflow-x: scroll;
 }
 
-#inventory {
+#inventory, #pericias {
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -15,7 +17,7 @@
     border-radius: 8px;
 }
 
-#inventory h3{
+#inventory h3, #pericias h3{
     text-align: center;
     margin-top: 8px;
     padding-bottom: 6px;
@@ -23,13 +25,13 @@
     border-bottom: 1px solid black;
 }
 
-#itens{
+#itens, #habs{
     display: block;
     height: 100%;
     overflow-y: scroll;
 }
 
-.item{
+.item, .hab{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -38,7 +40,7 @@
     margin-inline: 8px;
 }
 
-#itens .nome{
+#itens .nome, #habs .nome{
     width: 70%;
     height: 18px;
     text-align: left;
@@ -48,32 +50,37 @@
     border-right: 1px dashed black;
 }
 
-#itens .qtd{
+#itens .qtd, #habs .qtd{
     width: 20%;
     display: flex;
 }
 
-#itens button{
+#itens button, #habs button{
     background-color: rgb(255, 43, 43);
     color: white;
     border: 1px solid black;
+    border-bottom: none;
     width: 28px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#itens button:hover{
+#itens button:hover, #habs button:hover{
     cursor: pointer;
-    width: 30px;
+    background-color: rgb(250, 64, 64);
     transition: .1s;
 }
 
-#foot{
+#foot, #hab_foot{
     border-top: 1px solid black;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     background-color: greenyellow;
 }
 
-#foot button{
+#foot button, #hab_foot button{
     width: 100%;
     border: none;
     border-radius: 8px;
@@ -82,25 +89,29 @@
     background-color: transparent;
 }
 
-#foot button:hover{
+#foot button:hover, #hab_foot button:hover{
     cursor: pointer;
     padding: 4px;
     transition: .2s;
 }
 
 @media (max-width: 700px) {
-    #inventory{
-        width: 90%;
+    #lists{
+        justify-content: start;
+    }
+
+    #inventory, #pericias{
+        min-width: 365px;
         height: 400px;
-        margin: auto;
+        margin: 18px;
         margin-bottom: 18px;
     }
 
-    #inventory h3{
+    #inventory h3, #pericias h3{
         font-size: 24px;
     }
 
-    textarea, #itens input, #add_item{
+    textarea, #itens input, #habs input, #add_item, #add_hab{
         font-size: 22px;
     }
 }

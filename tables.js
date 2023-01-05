@@ -68,7 +68,7 @@ function upload(tem_salvo, num) {
     _main.innerHTML = ''
     _main.innerHTML += '<button class="Mode" defer onclick=changeMode()><svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 48 48"><title>eye-open</title><g id="Layer_2" data-name="Layer 2">  <g id="invisible_box" data-name="invisible box"><rect width="48" height="48" fill="none"/>  </g>  <g id="icons_Q2" data-name="icons Q2"><path d="M45.3,22.1h0C43.2,19.5,35.4,11,24,11S4.8,19.5,2.7,22.1a3,3,0,0,0,0,3.8C4.8,28.5,12.6,37,24,37s19.2-8.5,21.3-11.1A3,3,0,0,0,45.3,22.1ZM24,33c-8.8,0-15.3-6.2-17.7-9,2.4-2.8,8.9-9,17.7-9s15.3,6.2,17.7,9C39.3,26.8,32.8,33,24,33Z"/><circle cx="24" cy="24" r="6"/></g></g></svg></button>'
     _main.innerHTML += '<div class="front"><section id="Perfil"></section><section id="Tabelas"></section></div>'
-    _main.innerHTML += '<div id="lists"><section id="inventory"></section><section id="pericias"></section></div>'
+    _main.innerHTML += '<div id="lists"><section id="pericias"></section><section id="inventory"></section></div>'
 
 
     this_file = num
@@ -117,6 +117,7 @@ function readCode(table) {
     _stats.innerHTML += '<strong id="def"></strong>'
     _stats.innerHTML += '<strong id="red"></strong>'
     _stats.innerHTML += '<strong id="agl"></strong>'
+    _stats.innerHTML += '<strong id="dmg"></strong>'
 
     let _input_nome = document.getElementById('NomePersonagem')
     _input_nome.setAttribute('value', Data.NomePersonagem)
@@ -411,7 +412,7 @@ function setStats() {
     let _red = document.getElementById('red')
     let red = MainValues[2] * 2
     let extra = guarda > 1 ? ' + 1d' + (Math.floor(guarda / 2) * 2) : ''
-    _red.innerHTML = red > 0 ? 'Redução: 1d' + red + extra : 'red: 0'
+    _red.innerHTML = red > 0 ? 'Redução: 1d' + red + extra : 'Redução: 0'
     Data.stats.red = red
 
     let atletismo = Data.tables[2].tot[0]
@@ -420,7 +421,13 @@ function setStats() {
     _agl.innerHTML = 'Agilidade: 1d6 ' + (agl == 0 ? '' : agl < 0 ? '- ' : '+ ') + (agl == 0 ? '' : Math.abs(agl))
     Data.stats.agl = agl
 
+    let _dmg = document.getElementById('dmg')
+    let dmg = MainValues[0] * 1.20
+    _dmg.innerHTML = 'Dano: ' + dmg
+    Data.stats.dmg = dmg
+
     setInventory()
+    setPericias()
 }
 
 function setInventory() {
@@ -434,7 +441,7 @@ function setInventory() {
     _itens.innerHTML = ''
 
     for (let i = 0; i < Data.inventory.length; i++) {
-        _itens.innerHTML += '<div class="item"><textarea type="text" id="item_' + i + '_nome">' + Data.inventory[i].nome + '</textarea><input type="number" min=1 id="item_' + i + '_qtd"><button onclick="removeItem(' + i + ')" id="remove_button_' + i + '">X</button></div>'
+        _itens.innerHTML += '<div class="item"><textarea type="text" id="item_' + i + '_nome">' + Data.inventory[i].nome + '</textarea><input type="number" min=1 id="item_' + i + '_qtd"><button onclick="removeItem(' + i + ')" id="remove_button_' + i + '">x</button></div>'
 
         let item_nome = document.getElementById("item_" + i + "_nome")
         item_nome.setAttribute('oninput', 'setItems(), resize(' + i + ')')
@@ -452,10 +459,45 @@ function setInventory() {
         for (let j = 0; j < Data.inventory.length; j++) {
             resize(j)
         }
+        for (let j = 0; j < Data.pericias.length; j++) {
+            habResize(j)
+        }
     })
     let _foot = document.getElementById('foot')
     _foot.innerHTML = ''
     _foot.innerHTML += '<button id="add_item" onclick="addItem()">Adicionar</button>'
+
+    save()
+}
+
+function setPericias(){
+    let _pericias = document.getElementById('pericias')
+    _pericias.innerHTML = ''
+    _pericias.innerHTML += '<h3>Perícias / Habilidades</h3>'
+    _pericias.innerHTML += '<div id="habs"></div>'
+    _pericias.innerHTML += '<div id="hab_foot"></div>'
+
+    let _habs = document.getElementById('habs')
+    _habs.innerHTML = ''
+    console.log(Data.pericias)
+
+    for(let i = 0; i < Data.pericias.length; i++){
+        _habs.innerHTML += '<div class="hab"><textarea type="text" id="hab_' + i + '_nome">' + Data.pericias[i].nome + '</textarea><input type="number" min=1 id="hab_' + i + '_qtd"><button onclick="removeHab(' + i + ')" id="remove_hab_button_' + i + '">x</button></div>'
+
+        let hab_nome = document.getElementById("hab_" + i + "_nome")
+        hab_nome.setAttribute('oninput', 'setHabs(), habResize(' + i + ')')
+        hab_nome.setAttribute('class', 'nome')
+
+        let hab_qtd = document.getElementById("hab_" + i + "_qtd")
+        hab_qtd.setAttribute('value', Data.pericias[i].qtd)
+        hab_qtd.setAttribute('oninput', 'setHabs()')
+        hab_qtd.setAttribute('class', 'qtd')
+        hab_qtd.setAttribute('placeholder', 'Qtd')
+    }
+
+    let _foot = document.getElementById('hab_foot')
+    _foot.innerHTML = ''
+    _foot.innerHTML += '<button id="add_hab" onclick="addHab()">Adicionar</button>'
 
     save()
 }
@@ -476,9 +518,30 @@ function setItems() {
     save()
 }
 
+function setHabs(){
+    let pericias = Data.pericias
+
+    let _habs = document.getElementById('habs')
+    let inps = _habs.getElementsByTagName('input')
+    let texts = _habs.querySelectorAll('textarea')
+
+    for (let i = 0; i < pericias.length; i++) {
+        pericias[i].nome = texts[i].value
+        pericias[i].qtd = Number(inps[i].value)
+    }
+
+    Data.pericias = pericias
+    save()
+}
+
 function addItem() {
     Data.inventory[Data.inventory.length] = { nome: '', qtd: 0 }
     setInventory()
+}
+
+function addHab() {
+    Data.pericias[Data.pericias.length] = { nome: '', qtd: 0 }
+    setPericias()
 }
 
 function removeItem(index) {
@@ -491,6 +554,19 @@ function removeItem(index) {
         console.log(`Removido: ${Data.inventory[index].nome}, x${Data.inventory[index].qtd}`)
         Data.inventory.splice(index, 1)
         setInventory()
+    }
+}
+
+function removeHab(index) {
+    let nome = Data.pericias[index].nome
+    if(nome == ''){
+        nome = 'Sem nome'
+    }
+    let permissao = confirm("Deseja mesmo excluir a seguinte habilidade:\n" + nome)
+    if (permissao) {
+        console.log(`Removido: ${Data.pericias[index].nome}, x${Data.pericias[index].qtd}`)
+        Data.pericias.splice(index, 1)
+        setPericias()
     }
 }
 
@@ -508,6 +584,24 @@ function resize(index) {
         qtd.style.height = element.scrollHeight + 'px'
 
         let button = document.getElementById('remove_button_' + index)
+        button.style.height = '16px'
+        button.style.height = element.scrollHeight + 'px'
+    } catch (err) {
+        return
+    }
+}
+
+function habResize(index) {
+    try {
+        let element = document.getElementById('hab_' + index + '_nome')
+        element.style.height = '16px'
+        element.style.height = element.scrollHeight + 'px'
+
+        let qtd = document.getElementById('hab_' + index + '_qtd')
+        qtd.style.height = '16px'
+        qtd.style.height = element.scrollHeight + 'px'
+
+        let button = document.getElementById('remove_hab_button_' + index)
         button.style.height = '16px'
         button.style.height = element.scrollHeight + 'px'
     } catch (err) {
