@@ -422,7 +422,7 @@ function setStats() {
     Data.stats.agl = agl
 
     let _dmg = document.getElementById('dmg')
-    let dmg = MainValues[0] * 1.20
+    let dmg = Math.floor(MainValues[0] * 1.20)
     _dmg.innerHTML = 'Dano: ' + dmg
     Data.stats.dmg = dmg
 
