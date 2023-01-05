@@ -15,8 +15,10 @@
     flex: 1;
     overflow-x: scroll;
     padding-block: 18px;
-    max-width: 32%;
+    min-width: 300px;
+    width: 32%;
     margin-inline-start: 18px;
+    margin-inline-end: 18px;
 }
 
 table {
@@ -125,9 +127,8 @@ table input {
 
 @media (max-width: 700px) {
     #Tabelas{
-        max-width: 95%;
-        margin: 4px;
-        
+        width: 90%;
+        margin-inline: 4px;
     }
 
     #Tabelas p, #Tabelas input{

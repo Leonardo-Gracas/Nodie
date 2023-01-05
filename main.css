@@ -51,7 +51,8 @@ button {
 }
 
 .upper1 button, .upper2 button, .upper2 label {
-    width: 100px;
+    width: 120px;
+    min-width: fit-content;
     min-height: fit-content;
     padding: 4px;
     font-size: 18px;
@@ -67,8 +68,10 @@ button {
 }
 
 .slt{
+    display: flex;
+    align-items: center;
     margin-block: 12px;
-
+    margin-inline: 18px;
 }
 
 .upper1 button:hover {
@@ -110,13 +113,13 @@ button {
 .front {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 #principal {
     display: flex;
     overflow-x: scroll;
-    max-width: 70%;
+    width: 90%;
     padding-block: 18px;
 }
 
@@ -127,6 +130,7 @@ button {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     background-color: rgb(255, 53, 53);
+    height: 100%;
 }
 
 @media (max-width: 700px) {
@@ -149,10 +153,8 @@ button {
         padding-block: 12px;
     }
 
-    .upper button{
-        font-size: 18px;
+    .upper2 button{
         width: 100px;
-        padding-block: 12px;
     }
 
     .front {
