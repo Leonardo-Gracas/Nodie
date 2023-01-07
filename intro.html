@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodie</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="content.css">
+</head>
+<script>
+    let nav = false
+    window.addEventListener('resize', normalizeNav)
+
+    function normalizeNav(){
+        if(window.innerWidth <= 700){
+            nav = false
+            let _nav = document.querySelector('nav')
+            _nav.removeAttribute('id')
+        }
+    }
+
+    function setNav(){
+        nav = !nav
+        let _nav = document.querySelector('nav')
+        if(nav){
+            _nav.setAttribute('id', 'shown')
+        } else{{
+            _nav.removeAttribute('id')
+        }}
+    }
+</script>
+
+<body>
+    <header position="initial" id="normal">
+        <img src="img/Logo nodie-PhotoRoom.png-PhotoRoom.png" href='/' alt="" id="logo">
+        <nav>
+            <li><a href="index.html">Ficha</a></li>
+            <li><a href="/">Introdução</a></li>
+        </nav>
+        <button id="bars" onclick="setNav()">☰</button>
+    </header>
+    <main>
+        <section class="img_content">
+            <img src="img/Cópia_de_Logo_nodie_transparente-removebg-preview.png" id="front_logo" alt="">
+            <div class="text">
+                <h3>Seja bem vindo ao sistema <strong id="nodie">Nodie</strong></h3>
+                <p>Primeiro, devo me apresentar: Sou o mestre Leonardo, tenho 18 anos e mestro campanhas desde os 13. Trabalho como programador e desenvolvi essa ficha inicialmente como um hobbie, mas, depois de me aprofundar em gerar mecânicas novas, tornei esse projeto algo mais sério. Após muitas campanhas teste com minha mesa principal, finalmente posso apresentar o meu sistema para vocês.</p>
+            </div>
+        </section>
+        <section class="title_content">
+            <h2>Introdução</h2>
+            <div class="text">
+                <p>O sistema tem o objetivo de tornar as coisas mais práticas tanto para o mestre quanto para os jogadores. A ficha funciona de um jeito bem intuitivo e dinâmico, fácil de pegar em poucos minutos jogando. O dado base é o d20 positivo (quanto maior o resultado, melhor) e soma-se os pontos bônus da tabela ao resultado final. Todas as ações devem usar um atributo principal e um específico para serem somados. Ex: Atacar com uma clava é uma ação que precisa de Força (principal) e o manuseio de armas pesadas (específico). Nada disso é obrigatório. O jogador pode desejar atacar de uma forma diferente em que a força não é necessária, mas sim a destreza. O mestre pode determinar intuitivamente quais serão os atributos necessários para cada ação (claro que a decisão deve ter algum sentido). Digamos que o jogador tenha 3 pontos em Força e 4 pontos em Armamento Pesado. Ele irá jogar um d20, somar 7 ao resultado e esse será seu sucesso. Alguns itens também podem somar ou subtrair pontos ao dado. Esse é o fundamento do sistema para situações gerais. Escolhi fazer a base o mais próxima possível dos sistemas comuns para que tanto os novos jogadores quanto os mais experientes não tenham dificuldade para se acostumar. Mais pra frente você vai encontrar as especificações para <strong>Combate</strong>, <strong>Magias</strong>, etc.</p>
+            </div>
+        </section>
+        <section class="title_content">
+            <h2>Criando a ficha</h2>
+            <div class="text">
+                <p>Para começar a usar, determine o nome e o nível do seu personagem. Cada nível determina uma quantidade de pontos a ser atribuida nas tabelas e o limite de cada item (vai ver isso depois). Após colocar um nível, arraste para o lado direito (se estiver no celular) e a tabela de atributos aparecerá. Nela você terá um indicador na parte de cima de quantos pontos você tem para distribuir. Cada um desses atributos principais determina os traços dos seu personagem. Veja <strong>Tabelas</strong> para entender melhor. A tabela limita automáticamente os pontos de acordo com o nível. Uma vez atribuidos todos os pontos, desça para as tabelas coloridas que são chamadas de "Tabelas Diretas". Nelas você vai trabalhar as ações específicas do personagem. Cada tabela tem um foco e os atributos são baseados nesses focos. Na tabela existem 3 campos para cada item: Natural, Adicionado e total (além dos pontos gerais no topo de cada tabela). Você deve distribuir os pontos nos espaços para "Adicionar" e, caso o campo "Total" passe do limite da tabela, a tabela limitará a adição. Uma vez que o nível está definido, todos os pontos estão distribuidos e o nome foi dado, Já pode comecar a usar a ficha nas campanhas. A criação de itens e habilidades devem ser combinadas com o mestre e depois adicionados nas tabelas abaixo. Veja <strong>Inventário</strong>.</p>
+            </div>
+        </section>
+        <section class="title_content_list">
+            <h2>Tabelas</h2>
+            <div class="text">
+                <p>As tabelas indicam quantos pontos você terá ao realizar cada tipo de ação. Existem no total 6 tabelas: 1 geral e 5 diretas. Cada direta serve pra um campo específico de ações que um personagem pode fazer. A seguir você verá a definição de cada tabela e de todos os itens dela.</p>
+                <br>
+                <p><em>Principal:</em> Na tabela principal estão os seus atributos principais que definem seu personagem. Os pontos irão determinar os pontos naturais e gerais das tabelas diretas. <ul>
+                    <li><em>Força: </em>Determina a força física do personagem e o <em>Dano</em> base. Também acrescenta pontos de <em>HP</em>.</li>
+                    <li><em>Destreza: </em>Determina o quão rápido seu personagem pode ser, seja se movimentando ou nanuseando objetos. Define a <em>Agilidade</em>.</li>
+                    <li><em>Constituição: </em>Determina a resistência física do seu personagem, seja para aguentar golpes ou resistir ao cansaço. Define o <em>HP</em>, <em>Defesa</em> e <em>Redução</em>.</li>
+                    <li><em>Atenção: </em>Determina os sentidos e o reflexo do personagem, assim como a pontaria.</li>
+                    <li><em>Inteligência: </em>Determina o poder mental e o aprendizado do seu personagem. (também define eficiência de alguns tipos de magia).</li>
+                    <li><em>Sabedoria: </em>Determina a resistência mental do seu personagem (Controle de mentes, testes de coragem, coisas do tipo) e a base de conhecimento do mesmo como testes para reconhecer algum tipo de planta, animal, etc. (Também define a quantidade de usos para alguns tipos de magia) </li>
+                    <li><em>Carisma: </em>Determina o poder de relação do personagem com os indivíduos ao redor, seja para manipular ou intimidar.</li>
+                    <li><em>Magia: </em>Determina a afinidade do personagem com a magia bem como a potência dos feitiços.</li>
+                </ul></p>
+                <br>
+            </div>
+            <p>Em produção...</p>
+        </section>
+    </main>
+</body>
+
+</html>

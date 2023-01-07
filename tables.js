@@ -18,14 +18,17 @@ let exibition = false
 getSaves()
 
 function getSaves() {
+    let _body = document.querySelector('body')
+    _body.setAttribute('class', 'center')
+    _body.innerHTML = '<header><img src="img/Logo nodie-PhotoRoom.png-PhotoRoom.png" onclick="getSaves()" alt="" id="logo"><nav><li><a href="/">Ficha</a></li><li><a href="intro.html">Introdução</a></li></nav><button id="bars" onclick="setNav()">☰</button></header>'
+    _body.innerHTML += '<img src="img/Cópia_de_Logo_nodie_transparente-removebg-preview.png" id="front_logo" alt=""><div id="header"></div><div id="main"></div>'
+    
     let _header = document.getElementById('header')
     _header.innerHTML = ''
     _header.innerHTML += '<h1>Selecione um slot</h1>'
     _header.innerHTML += '<div id="slots"></div>'
     _header.setAttribute('class', 'upper1')
 
-    let _body = document.querySelector('body')
-    _body.setAttribute('class', 'center')
 
     let _slots = document.getElementById('slots')
 
@@ -35,6 +38,9 @@ function getSaves() {
         saves[i] = JSON.parse(localStorage.getItem('save_' + i))
         if (saves[i] != null) {
             nome = saves[i].NomePersonagem == '' ? 'Sem Nome' : saves[i].NomePersonagem
+            if(nome.length > 16){
+                nome = nome.slice(0, 16) + "..."
+            }
             _slots.innerHTML += '<section class="slt"><button class="save_slot" onclick="upload(\'s\', ' + i + ')">' + nome + '</button><button id="deleteSlot" onclick="deleteSlot('+i+')" >x</button></section>'
         } else {
             _slots.innerHTML += '<section class="slt"><button class="save_slot" onclick="upload(\'n\', ' + i + ')">Vazio</button></section>'
@@ -68,9 +74,12 @@ function upload(tem_salvo, num) {
 
     let _body = document.getElementsByTagName('body')[0]
     _body.removeAttribute('class')
+    let header = document.querySelector('header')
+    header.setAttribute('class', 'pos')
     _body.innerHTML = ''
-    _body.innerHTML += '<header id="header"> <button onclick="getSaves()">↩</button> </header>'
+    _body.appendChild(header)
     _body.innerHTML += '<div id="main"></div>'
+    _body.innerHTML += '<div id="header"></div>'
 
 
     let _header = document.getElementById('header')
@@ -128,7 +137,7 @@ function save() {
 function readCode(table) {
     let _perfil = document.getElementById('Perfil')
     _perfil.innerHTML = ''
-    _perfil.innerHTML += '<input type="text" placeholder="Nome" onchange=save() id="NomePersonagem">'
+    _perfil.innerHTML += '<input type="text" placeholder="Nome" maxlength="22" onchange=save() id="NomePersonagem">'
     _perfil.innerHTML += '<div id="stats"></div>'
 
     let _stats = document.getElementById('stats')

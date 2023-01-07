@@ -1,0 +1,154 @@
+body,
+html {
+    background-color: whitesmoke;
+    overflow-x: hidden;
+    padding-bottom: 100px;
+}
+
+body {
+    padding-top: 75px;
+}
+
+section {
+    display: flex;
+    flex-wrap: wrap;
+    margin-block-end: 80px;
+}
+
+p,
+h3, 
+section li {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 24px;
+}
+
+section ul{
+    padding-inline-start: 40px;
+}
+
+section ul li{
+    margin-block: 8px;
+}
+
+p{
+    text-align: justify;
+    margin-inline: 8px;
+    text-indent: 0.8em;
+}
+
+#nodie {
+    font-size: 24px;
+}
+
+strong {
+    font-weight: 600;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+    border-bottom: 1px solid #9D862C;
+    color: #9D862C;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    padding-inline: 14px;
+}
+
+h2 {
+    font-size: 34px;
+    font-family: 'Times New Roman', Times, serif;
+    border-bottom: 2px solid #9D862C;
+    color: #9D862C;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+    padding-inline: 18px;
+    padding-bottom: 4px;
+    margin-bottom: 2rem;
+}
+
+.img_content {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: 12px;
+    margin-block-end: 30px;
+}
+
+.img_content .text {
+    padding-inline: 14px;
+    font-size: 18px;
+}
+
+.img_content h3 {
+    margin-bottom: 3rem;
+}
+
+.img_content p {
+    text-align: justify;
+}
+
+#front_logo {
+    z-index: 0;
+    margin: -70px;
+}
+
+.title_content,
+.title_content_list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title_content .text,
+.title_content_list .text {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 18px;
+}
+
+.title_content .text p,
+.title_content_list .text p {
+    columns: 3;
+    column-gap: 30px;
+    margin-inline: 30px;
+}
+
+.title_content_list .text {
+    columns: 3;
+}
+
+.title_content_list .text p {
+    columns: 1;
+}
+
+@media (max-width: 700px) {
+    p {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .title_content .text p {
+        columns: 1;
+        font-size: 20px;
+    }
+
+    .img_content {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .img_content p,
+    strong {
+        font-size: 20px;
+    }
+
+    h3 {
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 40px;
+    }
+}

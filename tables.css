@@ -1,4 +1,4 @@
-.Mode{
+.Mode {
     border: 1px solid rgb(22, 22, 22);
     border-radius: 30%;
     background-color: transparent;
@@ -6,11 +6,11 @@
     margin: 8px;
 }
 
-.Mode:hover{
+.Mode:hover {
     background-color: rgb(243, 242, 242);
 }
 
-#Tabelas{
+#Tabelas {
     display: flex;
     flex: 1;
     overflow-x: scroll;
@@ -30,17 +30,18 @@ table {
     display: inline-table;
 }
 
-#main_table{
+#main_table {
     height: 100%;
     max-width: 90%;
 }
 
-#main_table thead, #main_table th {
+#main_table thead,
+#main_table th {
     background-color: black;
     color: white;
 }
 
-#main_table p{
+#main_table p {
     font-size: 20px;
     padding: 4px 14px;
 }
@@ -55,7 +56,7 @@ thead tr {
     border-spacing: none;
 }
 
-.topos{
+.topos {
     font-size: 16px;
 }
 
@@ -80,58 +81,64 @@ table input {
     height: 30px;
 }
 
-.blue thead{
+.blue thead {
     background-color: #15D6C0;
 }
 
-.blue .naming, .blue .topos{
+.blue .naming,
+.blue .topos {
     background-color: #3BBAAB;
 }
 
-.red thead{
+.red thead {
     background-color: #E0070E;
 }
 
-.red .naming, .red .topos{
+.red .naming,
+.red .topos {
     background-color: #FB0E16;
 }
 
-.yellow thead{
+.yellow thead {
     background-color: #FAFA20;
 }
 
-.yellow .naming, .yellow .topos{
+.yellow .naming,
+.yellow .topos {
     background-color: #FFFF4A;
 }
 
-.green thead{
+.green thead {
     background-color: #65F748;
 }
 
-.green .naming, .green .topos{
+.green .naming,
+.green .topos {
     background-color: #85DB74;
 }
 
-.magenta thead{
+.magenta thead {
     background-color: #90479E;
 }
 
-.magenta .naming, .magenta .topos{
+.magenta .naming,
+.magenta .topos {
     background-color: #BF99C7;
 }
 
-.Exibition-P{
+.Exibition-P {
     padding: 12px 22px;
     font-size: 18px;
 }
 
 @media (max-width: 700px) {
-    #Tabelas{
+    #Tabelas {
         width: 90%;
         margin-inline: 4px;
     }
 
-    #Tabelas p, #Tabelas input{
+    #Tabelas p,
+    #Tabelas input {
         font-size: 18px;
     }
 }

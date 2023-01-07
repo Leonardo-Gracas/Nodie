@@ -10,13 +10,45 @@
     <link rel="stylesheet" href="tables.css">
     <link rel="stylesheet" href="perfil.css">
     <link rel="stylesheet" href="inventory.css">
+    <link rel="stylesheet" href="header.css">
     <title>Nodie</title>
 </head>
+<script>
+    let nav = false
+    window.addEventListener('resize', normalizeNav)
+
+    function normalizeNav(){
+        if(window.innerWidth <= 700){
+            nav = false
+            let _nav = document.querySelector('nav')
+            _nav.removeAttribute('id')
+        }
+    }
+
+    function setNav(){
+        nav = !nav
+        let _nav = document.querySelector('nav')
+        if(nav){
+            _nav.setAttribute('id', 'shown')
+        } else{{
+            _nav.removeAttribute('id')
+        }}
+    }
+</script>
 
 <body>
-    <header id="header">
-
+    <header position="initial" id="normal">
+        <img src="img/Logo nodie-PhotoRoom.png-PhotoRoom.png" href='/' alt="" id="logo">
+        <nav>
+            <li><a href="index.html">Ficha</a></li>
+            <li><a href="/">Introdução</a></li>
+        </nav>
+        <button id="bars" onclick="setNav()">☰</button>
     </header>
+    <img src="img/Cópia_de_Logo_nodie_transparente-removebg-preview.png" id="front_logo" alt="">
+    <div id="header">
+
+    </div>
     <div id="main"></div>
 </body>
 
